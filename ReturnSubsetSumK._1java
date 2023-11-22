@@ -1,0 +1,33 @@
+import java.util.ArrayList;
+
+public class Solution {
+    public static ArrayList<ArrayList<Integer>> solve(ArrayList<Integer> arr, int ind, int k){
+        if(ind == arr.size()){
+            if(k == 0){
+                ArrayList<ArrayList<Integer>> emptySubset = new ArrayList<>();
+                emptySubset.add(new ArrayList<>());
+                return emptySubset;
+            }
+            return new ArrayList<>();
+        }
+
+        ArrayList<ArrayList<Integer>> left = solve(arr, ind + 1, k - arr.get(ind));
+        ArrayList<ArrayList<Integer>> right = solve(arr, ind + 1, k);
+
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+        ans.addAll(right);
+
+        for(ArrayList<Integer> subset : left){
+            subset.add(0, arr.get(ind));
+            ans.add(subset);
+        }
+
+        return ans;
+    }
+
+
+    public static ArrayList<ArrayList<Integer>> findSubsetsThatSumToK(ArrayList<Integer> arr, int n, int k) {
+        // Write your code here.
+         return solve(arr, 0, k);
+    }
+}
